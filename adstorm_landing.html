@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdStorm — Consumer Intelligence for Indian SMEs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0E0D0B;
+  --paper:#F5F2EC;
+  --warm:#EDE9DF;
+  --line:#D4CFC4;
+  --fire:#E8400C;
+  --fire-dim:#F07050;
+  --smoke:#7A7570;
+  --faint:#B8B3A8;
+  --black:#080807;
+}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:'Manrope',sans-serif;line-height:1.5;overflow-x:hidden}
+
+/* ─── NAV ─── */
+nav{display:flex;align-items:center;justify-content:space-between;padding:18px 40px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--paper);z-index:50}
+.logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;letter-spacing:-0.5px;color:var(--ink)}
+.logo em{color:var(--fire);font-style:normal}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--smoke);text-decoration:none;transition:color 0.15s}
+.nav-links a:hover{color:var(--ink)}
+.nav-right{display:flex;align-items:center;gap:16px}
+.btn-nav{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:9px 20px;border-radius:2px;cursor:pointer;font-family:'Manrope',sans-serif;transition:all 0.15s}
+.btn-text{background:none;border:none;color:var(--smoke)}
+.btn-text:hover{color:var(--ink)}
+.btn-solid{background:var(--ink);color:var(--paper);border:none}
+.btn-solid:hover{background:var(--fire)}
+
+/* ─── HERO ─── */
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:88vh;border-bottom:1px solid var(--line)}
+.hero-left{padding:60px 40px;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between}
+.hero-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:2px;color:var(--smoke);margin-bottom:40px;display:flex;align-items:center;gap:10px}
+.eyebrow-line{flex:1;height:1px;background:var(--line)}
+.hero-h1{font-family:'Playfair Display',serif;font-size:64px;font-weight:900;line-height:0.95;letter-spacing:-2px;color:var(--ink);margin-bottom:0}
+.hero-h1 .italic{font-style:italic;color:var(--fire)}
+.hero-h1 .outline{-webkit-text-stroke:1.5px var(--ink);color:transparent}
+.hero-bottom{display:flex;flex-direction:column;gap:24px}
+.hero-desc{font-size:15px;color:var(--smoke);line-height:1.7;max-width:380px;font-weight:400}
+.hero-cta-row{display:flex;align-items:center;gap:20px}
+.btn-fire{background:var(--fire);color:#fff;border:none;padding:14px 32px;border-radius:2px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;cursor:pointer;font-family:'Manrope',sans-serif;transition:all 0.15s}
+.btn-fire:hover{background:#C73008}
+.btn-link{font-size:13px;font-weight:600;color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer;background:none;border:none;font-family:'Manrope',sans-serif}
+
+/* ─── HERO RIGHT PANEL ─── */
+.hero-right{padding:0;background:var(--warm);display:flex;flex-direction:column;position:relative;overflow:hidden}
+.hr-ticker{background:var(--ink);color:var(--paper);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:8px 24px;display:flex;gap:40px;white-space:nowrap;overflow:hidden}
+.ticker-item{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.ticker-up{color:#50D890}
+.ticker-down{color:#E85050}
+.hr-main{flex:1;padding:28px 32px;display:flex;flex-direction:column;gap:20px}
+.brand-pill{display:inline-flex;align-items:center;gap:8px;background:var(--paper);border:1px solid var(--line);border-radius:100px;padding:6px 14px;font-size:12px;font-weight:600;width:fit-content}
+.brand-dot{width:8px;height:8px;border-radius:50%;background:var(--fire)}
+.insight-headline{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;line-height:1.2;color:var(--ink)}
+.insight-headline span{color:var(--fire)}
+.segment-table{width:100%;border-collapse:collapse;font-size:13px}
+.segment-table th{text-align:left;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:1px;color:var(--faint);padding:0 0 10px;border-bottom:1px solid var(--line)}
+.segment-table td{padding:10px 0;border-bottom:1px solid var(--line);vertical-align:middle}
+.segment-table td:last-child{text-align:right}
+.seg-name{font-weight:600;font-size:13px}
+.seg-sub{font-size:11px;color:var(--smoke);margin-top:2px}
+.bar-wrap{width:120px;height:3px;background:var(--line);border-radius:2px;overflow:hidden}
+.bar-fill{height:100%;border-radius:2px;background:var(--fire)}
+.score-badge{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;color:var(--fire);background:rgba(232,64,12,0.08);padding:3px 8px;border-radius:2px}
+.ad-preview-strip{background:var(--ink);border-radius:4px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between}
+.ad-ready-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--faint);text-transform:uppercase;letter-spacing:1px}
+.ad-formats{display:flex;gap:6px}
+.format-chip{font-size:11px;font-weight:600;padding:4px 10px;border-radius:2px;cursor:pointer;border:none}
+.fc-active{background:var(--fire);color:#fff}
+.fc-idle{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.5)}
+
+/* ─── MARQUEE ─── */
+.marquee-strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 0;overflow:hidden;background:var(--paper)}
+.marquee-inner{display:flex;gap:48px;white-space:nowrap;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--smoke);animation:marquee 22s linear infinite}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee-item{display:flex;align-items:center;gap:12px}
+.marquee-dot{width:4px;height:4px;border-radius:50%;background:var(--fire);flex-shrink:0}
+
+/* ─── NUMBERS BAR ─── */
+.numbers-bar{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}
+.num-cell{padding:40px 36px;border-right:1px solid var(--line)}
+.num-cell:last-child{border-right:none}
+.num-val{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;line-height:1;letter-spacing:-2px;color:var(--ink)}
+.num-val em{font-style:normal;color:var(--fire)}
+.num-label{font-size:12px;color:var(--smoke);margin-top:8px;line-height:1.5}
+
+/* ─── HOW IT WORKS ─── */
+.how-section{display:grid;grid-template-columns:280px 1fr;border-bottom:1px solid var(--line)}
+.how-left{padding:60px 40px;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between}
+.section-label-vert{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:2px;color:var(--faint)}
+.how-big-num{font-family:'Playfair Display',serif;font-size:120px;font-weight:900;line-height:1;color:var(--line);letter-spacing:-4px;margin-top:auto}
+.how-right{padding:60px 48px}
+.how-title{font-family:'Playfair Display',serif;font-size:40px;font-weight:900;line-height:1.05;letter-spacing:-1px;margin-bottom:48px}
+.how-title em{font-style:italic;color:var(--fire)}
+.steps-list{display:flex;flex-direction:column}
+.step-row{display:grid;grid-template-columns:48px 1fr;gap:24px;padding:28px 0;border-top:1px solid var(--line)}
+.step-row:last-child{border-bottom:1px solid var(--line)}
+.step-idx{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--faint);padding-top:4px}
+.step-name{font-size:16px;font-weight:700;margin-bottom:6px;color:var(--ink)}
+.step-desc{font-size:14px;color:var(--smoke);line-height:1.65}
+.step-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.step-tag{font-size:11px;font-weight:600;color:var(--smoke);border:1px solid var(--line);padding:3px 10px;border-radius:100px}
+
+/* ─── BENTO FEATURES ─── */
+.bento{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--line)}
+.bento-cell{padding:44px 40px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.bento-cell:nth-child(3n){border-right:none}
+.bento-cell.wide{grid-column:span 2}
+.bento-cell.dark{background:var(--ink);color:var(--paper)}
+.bento-cell.fire{background:var(--fire);color:#fff}
+.bento-num{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;color:var(--faint);letter-spacing:1px;margin-bottom:20px}
+.bento-num-dark{color:rgba(255,255,255,0.3)}
+.bento-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;line-height:1.15;margin-bottom:12px}
+.bento-desc{font-size:13px;color:var(--smoke);line-height:1.65}
+.bento-desc-light{font-size:13px;color:rgba(255,255,255,0.6);line-height:1.65}
+.bento-list{list-style:none;margin-top:16px;display:flex;flex-direction:column;gap:6px}
+.bento-list li{font-size:12px;font-weight:600;color:var(--smoke);display:flex;align-items:center;gap:8px}
+.bento-list li::before{content:'→';color:var(--fire)}
+.bento-list-light li{color:rgba(255,255,255,0.7)}
+.bento-list-light li::before{color:rgba(255,255,255,0.4)}
+.bento-big{font-family:'Playfair Display',serif;font-size:64px;font-weight:900;line-height:0.9;letter-spacing:-3px;margin-top:12px}
+
+/* ─── QUOTE ─── */
+.quote-section{padding:80px 40px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr 2fr;gap:60px;align-items:start}
+.quote-label{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--faint)}
+.quote-name{font-size:14px;font-weight:700;margin-top:16px}
+.quote-role{font-size:13px;color:var(--smoke)}
+.quote-text{font-family:'Playfair Display',serif;font-size:28px;font-weight:400;font-style:italic;line-height:1.45;color:var(--ink);border-left:3px solid var(--fire);padding-left:32px}
+
+/* ─── PRICING ─── */
+.pricing-section{padding:72px 40px;border-bottom:1px solid var(--line)}
+.pricing-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px}
+.pricing-title{font-family:'Playfair Display',serif;font-size:40px;font-weight:900;letter-spacing:-1px}
+.pricing-sub{font-size:13px;color:var(--smoke);text-align:right;max-width:220px;line-height:1.6}
+.plans-grid{display:grid;grid-template-columns:1fr 1fr 1fr;border:1px solid var(--line)}
+.plan{padding:32px 28px;border-right:1px solid var(--line)}
+.plan:last-child{border-right:none}
+.plan-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--line)}
+.plan-name{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:1.5px;color:var(--smoke)}
+.plan-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:4px 10px;background:var(--fire);color:#fff;border-radius:2px}
+.plan-price{font-family:'Playfair Display',serif;font-size:44px;font-weight:900;letter-spacing:-2px;color:var(--ink);line-height:1}
+.plan-per{font-size:13px;color:var(--smoke);margin-top:4px}
+.plan-features{list-style:none;margin:20px 0 28px;display:flex;flex-direction:column;gap:10px}
+.plan-features li{font-size:13px;color:var(--smoke);display:flex;align-items:flex-start;gap:10px;line-height:1.4}
+.check{color:var(--fire);font-weight:700;flex-shrink:0}
+.plan-btn{width:100%;padding:12px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;cursor:pointer;font-family:'Manrope',sans-serif;transition:all 0.15s;border-radius:2px}
+.plan-btn:hover{background:var(--ink);color:var(--paper)}
+.plan-btn-fire{background:var(--fire);border-color:var(--fire);color:#fff}
+.plan-btn-fire:hover{background:#C73008;border-color:#C73008;color:#fff}
+
+/* ─── FOOTER ─── */
+footer{display:grid;grid-template-columns:1fr 1fr 1fr;padding:48px 40px;border-top:1px solid var(--line);gap:40px}
+.footer-logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:var(--ink)}
+.footer-logo em{color:var(--fire);font-style:normal}
+.footer-tagline{font-size:13px;color:var(--smoke);line-height:1.6;max-width:220px;margin-top:16px}
+.footer-col-title{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:2px;color:var(--faint);margin-bottom:16px}
+.footer-links-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-links-list a{font-size:13px;color:var(--smoke);text-decoration:none;transition:color 0.15s}
+.footer-links-list a:hover{color:var(--ink)}
+.footer-bottom{grid-column:span 3;border-top:1px solid var(--line);padding-top:24px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--faint);font-family:'IBM Plex Mono',monospace}
+
+/* ─── A/B TEST CARDS (in bento) ─── */
+.ab-card{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:2px}
+.ab-card.winner{background:var(--warm)}
+.ab-label{font-size:12px;font-weight:600}
+.ab-label.muted{color:var(--smoke)}
+.ab-stat{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--fire)}
+.ab-stat.muted{color:var(--smoke)}
+.ab-rec{font-size:11px;color:var(--smoke);display:flex;align-items:center;gap:6px;padding:0 4px;margin-top:4px}
+.ab-rec-arrow{color:var(--fire);font-weight:700}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <div class="logo">AI<em>Revolution</em></div>
+  <ul class="nav-links">
+    <li><a href="#">Product</a></li>
+    <li><a href="#">Use cases</a></li>
+    <li><a href="#">Research</a></li>
+    <li><a href="#">Pricing</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="btn-nav btn-text">Log in</button>
+    <button class="btn-nav btn-solid">Early access</button>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-left">
+    <div>
+      <div class="hero-eyebrow">
+        <span>Consumer intelligence for Indian SMEs</span>
+        <div class="eyebrow-line"></div>
+      </div>
+      <h1 class="hero-h1">
+        Know your<br>
+        <span class="italic">audience.</span><br>
+        <span class="outline">Own</span> the<br>
+        market.
+      </h1>
+    </div>
+    <div class="hero-bottom">
+      <p class="hero-desc">AI-powered research that maps your exact customer — then builds campaigns that convert. Built for brands that can't afford to guess.</p>
+      <div class="hero-cta-row">
+        <button class="btn-fire">Start researching →</button>
+        <button class="btn-link">See how it works</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <!-- Live ticker -->
+    <div class="hr-ticker">
+      <div class="ticker-item"><span>CTR</span><span class="ticker-up">↑ 3.2%</span></div>
+      <div class="ticker-item"><span>CPA</span><span class="ticker-down">↓ ₹312</span></div>
+      <div class="ticker-item"><span>ROAS</span><span class="ticker-up">↑ 4.1×</span></div>
+      <div class="ticker-item"><span>Reach</span><span class="ticker-up">↑ 180K</span></div>
+      <div class="ticker-item"><span>Engagement</span><span class="ticker-up">↑ 8.7%</span></div>
+      <div class="ticker-item"><span>Conv rate</span><span class="ticker-up">↑ 2.9%</span></div>
+    </div>
+
+    <!-- Dashboard panel -->
+    <div class="hr-main">
+      <div class="brand-pill">
+        <div class="brand-dot"></div>
+        Rohit's Apparel Co. — Mumbai
+      </div>
+
+      <div class="insight-headline">
+        Your real buyers are <span>tier-2 women</span> — not who you've been targeting.
+      </div>
+
+      <table class="segment-table">
+        <thead>
+          <tr>
+            <th>Segment</th>
+            <th>Reach</th>
+            <th style="text-align:right">Match score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="seg-name">Urban women, 22–34</div>
+              <div class="seg-sub">Tier-2 cities · Festival buyers</div>
+            </td>
+            <td><div class="bar-wrap"><div class="bar-fill" style="width:84%"></div></div></td>
+            <td><span class="score-badge">84%</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="seg-name">Aspirational millennials</div>
+              <div class="seg-sub">₹4–8L income · Instagram-first</div>
+            </td>
+            <td><div class="bar-wrap"><div class="bar-fill" style="width:71%"></div></div></td>
+            <td><span class="score-badge">71%</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="seg-name">Gift buyers, 30–45</div>
+              <div class="seg-sub">Occasional · High cart value</div>
+            </td>
+            <td><div class="bar-wrap"><div class="bar-fill" style="width:58%"></div></div></td>
+            <td><span class="score-badge">58%</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="ad-preview-strip">
+        <div>
+          <div class="ad-ready-label">Ready to generate</div>
+          <div style="color:rgba(255,255,255,0.85);font-size:13px;font-weight:600;margin-top:4px">3 ad scripts · 2 video briefs</div>
+        </div>
+        <div class="ad-formats">
+          <button class="format-chip fc-active">Reels</button>
+          <button class="format-chip fc-idle">Meta</button>
+          <button class="format-chip fc-idle">Email</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MARQUEE ═══ -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span class="marquee-item"><span class="marquee-dot"></span>Consumer intelligence</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>AI-generated video ads</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>District-level insights</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Meta & Google integration</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>A/B testing suite</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Cultural targeting</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Script generation</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Behavioural profiling</span>
+    <!-- Duplicate for seamless loop -->
+    <span class="marquee-item"><span class="marquee-dot"></span>Consumer intelligence</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>AI-generated video ads</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>District-level insights</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Meta & Google integration</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>A/B testing suite</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Cultural targeting</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Script generation</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Behavioural profiling</span>
+  </div>
+</div>
+
+<!-- ═══ NUMBERS ═══ -->
+<div class="numbers-bar">
+  <div class="num-cell">
+    <div class="num-val">2,400<em>+</em></div>
+    <div class="num-label">SMEs onboarded across<br>14 Indian states</div>
+  </div>
+  <div class="num-cell">
+    <div class="num-val">3.8<em>×</em></div>
+    <div class="num-label">average ROAS improvement<br>within 60 days</div>
+  </div>
+  <div class="num-cell">
+    <div class="num-val">48<em>h</em></div>
+    <div class="num-label">median time from sign-up<br>to first live campaign</div>
+  </div>
+  <div class="num-cell">
+    <div class="num-val">₹0</div>
+    <div class="num-label">agency fees saved on<br>average per campaign cycle</div>
+  </div>
+</div>
+
+<!-- ═══ HOW IT WORKS ═══ -->
+<div class="how-section">
+  <div class="how-left">
+    <div class="section-label-vert">Process</div>
+    <div class="how-big-num">04</div>
+  </div>
+  <div class="how-right">
+    <h2 class="how-title">From gut feeling<br>to <em>data-backed</em><br>campaigns.</h2>
+    <div class="steps-list">
+      <div class="step-row">
+        <div class="step-idx">01 —</div>
+        <div>
+          <div class="step-name">Drop your brand URL</div>
+          <p class="step-desc">Paste your website or describe your business in plain language. Our scraper reads your market, competitors, and positioning in under 2 minutes.</p>
+          <div class="step-tags">
+            <span class="step-tag">Web analysis</span>
+            <span class="step-tag">Market mapping</span>
+            <span class="step-tag">Auto-onboard</span>
+          </div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-idx">02 —</div>
+        <div>
+          <div class="step-name">Get your real audience profile</div>
+          <p class="step-desc">Not a generic persona. District-level behavioural data, cultural buying triggers, and psychographic breakdown — specific to your category and region.</p>
+          <div class="step-tags">
+            <span class="step-tag">Demographics</span>
+            <span class="step-tag">Psychographics</span>
+            <span class="step-tag">Cultural context</span>
+          </div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-idx">03 —</div>
+        <div>
+          <div class="step-name">Generate creatives in any format</div>
+          <p class="step-desc">Scripts, actor videos, reels, email sequences, or LinkedIn content — all written for your exact audience, not a hypothetical one.</p>
+          <div class="step-tags">
+            <span class="step-tag">Video ads</span>
+            <span class="step-tag">Scripts</span>
+            <span class="step-tag">Email</span>
+            <span class="step-tag">Social</span>
+          </div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-idx">04 —</div>
+        <div>
+          <div class="step-name">Launch, test, and let AI optimise</div>
+          <p class="step-desc">Push directly to Meta and Google. A/B test creatives against real audience segments. The platform reads performance and tells you exactly what to fix.</p>
+          <div class="step-tags">
+            <span class="step-tag">Meta Ads</span>
+            <span class="step-tag">Google Ads</span>
+            <span class="step-tag">A/B testing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BENTO FEATURES ═══ -->
+<div class="bento">
+
+  <!-- Cell 1: wide dark -->
+  <div class="bento-cell wide dark">
+    <div class="bento-num bento-num-dark">Feature 01</div>
+    <div class="bento-title" style="color:#F5F2EC;font-size:30px">Consumer intelligence that goes<br>past ZIP codes.</div>
+    <p class="bento-desc-light">Most tools give you age ranges. AdStorm gives you district-level behavioural data, seasonal buying cycles, and what actually makes your customer click — sourced from research papers, market surveys, and real purchase patterns across India.</p>
+    <ul class="bento-list bento-list-light">
+      <li>State & district-level breakdowns</li>
+      <li>Cultural & festival buying triggers</li>
+      <li>Language & platform preferences</li>
+    </ul>
+  </div>
+
+  <!-- Cell 2: warm -->
+  <div class="bento-cell" style="background:var(--warm)">
+    <div class="bento-num">Feature 02</div>
+    <div class="bento-title">No camera? No team? No problem.</div>
+    <p class="bento-desc">Generate realistic AI actor videos, voice-overs, and short-form reels from a script — or write a brief and shoot it yourself with our scene-by-scene direction.</p>
+    <div class="bento-big" style="color:var(--line)">HD</div>
+  </div>
+
+  <!-- Cell 3: fire -->
+  <div class="bento-cell fire">
+    <div class="bento-num" style="color:rgba(255,255,255,0.5)">Feature 03</div>
+    <div class="bento-title" style="color:#fff">Industry<br>use-case<br>library.</div>
+    <p class="bento-desc-light">Pre-built workflows for 20+ categories — fashion, gaming, D2C, real estate, education. Plug in your brand, get a proven campaign framework out.</p>
+  </div>
+
+  <!-- Cell 4: warm -->
+  <div class="bento-cell" style="background:var(--warm)">
+    <div class="bento-num">Feature 04</div>
+    <div class="bento-title">Edit everything<br>in one place.</div>
+    <p class="bento-desc">Built-in video editor with auto-subtitles, platform resizing, smart transitions, and AI trim suggestions. Never open another tool.</p>
+    <div class="bento-big" style="color:var(--fire)">↗</div>
+  </div>
+
+  <!-- Cell 5: wide plain -->
+  <div class="bento-cell wide">
+    <div class="bento-num">Feature 05</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start">
+      <div>
+        <div class="bento-title">A/B testing that<br>runs itself.</div>
+        <p class="bento-desc">Test hooks, captions, thumbnails, and audience segments in parallel — across Meta and Google simultaneously. The AI reads performance and surfaces the next best move.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px">
+        <div class="ab-card">
+          <span class="ab-label">Version A — Emotional hook</span>
+          <span class="ab-stat">CTR 4.2%</span>
+        </div>
+        <div class="ab-card winner">
+          <span class="ab-label muted">Version B — Product-first</span>
+          <span class="ab-stat muted" style="color:var(--smoke)">CTR 2.1%</span>
+        </div>
+        <div class="ab-rec">
+          <span class="ab-rec-arrow">→</span> AI recommends scaling Version A
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══ QUOTE ═══ -->
+<div class="quote-section">
+  <div>
+    <div class="quote-label">Customer story</div>
+    <div class="quote-name">Priya Menon</div>
+    <div class="quote-role">Founder, Kalindi Textiles<br>Jaipur, Rajasthan</div>
+  </div>
+  <blockquote class="quote-text">
+    "We had been running the same Facebook ad for 8 months. AdStorm told us our actual buyers were in Indore and Nagpur, not Delhi. We shifted everything in a week and our cost per order dropped by 40%."
+  </blockquote>
+</div>
+
+<!-- ═══ PRICING ═══ -->
+<div class="pricing-section">
+  <div class="pricing-header">
+    <div class="pricing-title">Simple pricing.<br>Honest numbers.</div>
+    <div class="pricing-sub">No contracts. No agency retainers. Cancel any time.</div>
+  </div>
+  <div class="plans-grid">
+    <div class="plan">
+      <div class="plan-top">
+        <div class="plan-name">Starter</div>
+      </div>
+      <div class="plan-price">₹0</div>
+      <div class="plan-per">forever free</div>
+      <ul class="plan-features">
+        <li><span class="check">✓</span>3 audience profiles</li>
+        <li><span class="check">✓</span>5 AI-generated scripts</li>
+        <li><span class="check">✓</span>Use-case library access</li>
+        <li><span class="check">✓</span>Basic analytics dashboard</li>
+      </ul>
+      <button class="plan-btn">Start free</button>
+    </div>
+
+    <div class="plan" style="background:var(--warm)">
+      <div class="plan-top">
+        <div class="plan-name">Growth</div>
+        <div class="plan-badge">Popular</div>
+      </div>
+      <div class="plan-price">₹4,999</div>
+      <div class="plan-per">per month, billed monthly</div>
+      <ul class="plan-features">
+        <li><span class="check">✓</span>Unlimited audience profiles</li>
+        <li><span class="check">✓</span>AI video & voice-over generation</li>
+        <li><span class="check">✓</span>Meta & Google Ads integration</li>
+        <li><span class="check">✓</span>Full A/B testing suite</li>
+        <li><span class="check">✓</span>Built-in video editor</li>
+        <li><span class="check">✓</span>Priority support</li>
+      </ul>
+      <button class="plan-btn plan-btn-fire">Start free trial</button>
+    </div>
+
+    <div class="plan">
+      <div class="plan-top">
+        <div class="plan-name">Enterprise</div>
+      </div>
+      <div class="plan-price" style="font-size:32px">Custom</div>
+      <div class="plan-per">contact us for a quote</div>
+      <ul class="plan-features">
+        <li><span class="check">✓</span>Multi-brand workspace</li>
+        <li><span class="check">✓</span>Custom data ingestion</li>
+        <li><span class="check">✓</span>Dedicated account manager</li>
+        <li><span class="check">✓</span>API access & white-label</li>
+        <li><span class="check">✓</span>SLA & onboarding support</li>
+      </ul>
+      <button class="plan-btn">Talk to sales →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div>
+    <div class="footer-logo">Ad<em>Storm</em></div>
+    <div class="footer-tagline">AI-powered consumer research and ad creation for Indian SMEs.</div>
+  </div>
+  <div>
+    <div class="footer-col-title">Product</div>
+    <ul class="footer-links-list">
+      <li><a href="#">Consumer research</a></li>
+      <li><a href="#">Ad generation</a></li>
+      <li><a href="#">Use-case library</a></li>
+      <li><a href="#">A/B testing</a></li>
+      <li><a href="#">Video editor</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="footer-col-title">Company</div>
+    <ul class="footer-links-list">
+      <li><a href="#">About</a></li>
+      <li><a href="#">Blog</a></li>
+      <li><a href="#">Careers</a></li>
+      <li><a href="#">Privacy</a></li>
+      <li><a href="#">Terms</a></li>
+    </ul>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 AdStorm Technologies Pvt. Ltd.</span>
+    <span>Made in India · Backed by data</span>
+  </div>
+</footer>
+
+</body>
+</html>
